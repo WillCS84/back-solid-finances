@@ -18,4 +18,16 @@ export class CategoryUseCases {
   async findById(id_categoria: string) {
     return await this.categoryRepository.findById(id_categoria)
   }
+
+  async findByDescription(descricao: string) {
+    return await this.categoryRepository.findByDescription(descricao)
+  }
+
+  async update(id_categoria: string, fields: ICategoryRequestDTO) {
+    return await this.categoryRepository.update(id_categoria, fields)
+  }
+
+  async deleteById(id_categoria: string) {
+    return await this.categoryRepository.deleteById(id_categoria)
+  }
 }

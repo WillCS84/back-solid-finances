@@ -1,7 +1,6 @@
-import { FastifyReply } from "fastify"
+import { FastifyReply, FastifyRequest } from "fastify"
 import { CategoryUseCases } from "./CategoryUseCases"
 import { ICategoryRequestDTO } from "./CategoryDTO"
-import { Category } from "../../entities/Category"
 
 export class CategoryController {
   constructor(private createCategoryController: CategoryUseCases) {}
@@ -32,6 +31,36 @@ export class CategoryController {
       const { id_categoria } = request.body
 
       return await this.createCategoryController.findById(id_categoria)
+    } catch (error) {
+      return reply.code(401).send({ error: true, motive: error.error, message: error.message })
+    }
+  }
+
+  async findByDescription(request: { body: ICategoryRequestDTO }, reply: FastifyReply) {
+    try {
+      const { descricao } = request.body
+
+      return await this.createCategoryController.findByDescription(descricao)
+    } catch (error) {
+      return reply.code(401).send({ error: true, motive: error.error, message: error.message })
+    }
+  }
+
+  async update(request: { body: ICategoryRequestDTO }, reply: FastifyReply) {
+    try {
+      const fields = request.body
+
+      return await this.createCategoryController.update(fields.id_categoria, fields)
+    } catch (error) {
+      return reply.code(401).send({ error: true, motive: error.error, message: error.message })
+    }
+  }
+
+  async deleteById(request: { body: ICategoryRequestDTO }, reply: FastifyReply) {
+    try {
+      const { id_categoria } = request.body
+
+      return await this.createCategoryController.deleteById(id_categoria)
     } catch (error) {
       return reply.code(401).send({ error: true, motive: error.error, message: error.message })
     }
